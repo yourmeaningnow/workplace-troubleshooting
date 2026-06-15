@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workplace Troubleshooting — Your Meaning Now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#142A55;
+    --navy-soft:rgba(20,42,85,.62);
+    --navy-faint:rgba(20,42,85,.14);
+    --navy-hair:rgba(20,42,85,.10);
+    --parchment:#FBF8F1;
+    --parchment-card:#FFFDF8;
+    --lilac:#C9B7E8;
+    --lilac-ink:#7256A8;
+    --lilac-fill:#B7A2DD;
+    --danger:#A23B3B;
+    --danger-bg:#F3E3DF;
+    --good:#3B6E55;
+    --display:"Cormorant Garamond",Georgia,serif;
+    --body:"EB Garamond",Georgia,serif;
+    --caption:"Public Sans",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--parchment);
+    color:var(--navy);
+    font-family:var(--body);
+    font-size:19px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 28px 96px}
+  .eyebrow{
+    font-family:var(--caption);
+    font-size:11.5px;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--navy-soft);
+  }
+  h1,h2,h3{font-family:var(--display);font-weight:500;color:var(--navy);line-height:1.12;margin:0}
+  h1{font-size:54px;letter-spacing:-.01em}
+  h2{font-size:36px}
+  h3{font-size:25px}
+  .accent{font-style:italic;color:var(--lilac-ink)}
+  p{margin:0 0 1rem}
+  .lede{font-size:21px;color:var(--navy);opacity:.92}
+  .muted{color:var(--navy-soft)}
+  .rule{height:1px;background:var(--navy-faint);border:0;margin:34px 0}
+
+  /* progress */
+  .topbar{position:sticky;top:0;z-index:20;background:var(--parchment);padding-top:26px;padding-bottom:14px}
+  .brandline{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .brand{font-family:var(--display);font-size:21px}
+  .brand .dot{color:var(--lilac-ink)}
+  .stepcount{font-family:var(--caption);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--navy-soft)}
+  .track{height:3px;background:var(--navy-hair);border-radius:99px;overflow:hidden}
+  .track > i{display:block;height:100%;background:var(--lilac-fill);width:0;transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+  /* buttons */
+  .btn{
+    font-family:var(--caption);font-size:13px;font-weight:600;letter-spacing:.06em;
+    padding:14px 26px;border-radius:3px;border:1.5px solid var(--navy);
+    background:var(--navy);color:var(--parchment);cursor:pointer;
+    transition:transform .12s ease,background .15s ease,opacity .15s ease;
+  }
+  .btn:hover{background:#1d3a6f}
+  .btn:active{transform:scale(.985)}
+  .btn:disabled{opacity:.32;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--navy)}
+  .btn.ghost:hover{background:rgba(20,42,85,.05)}
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:40px}
+  .nav .spacer{flex:1}
+  .answered{font-family:var(--caption);font-size:11.5px;font-weight:500;letter-spacing:.04em;color:var(--navy-soft)}
+
+  /* intro */
+  .hero{padding:40px 0 8px}
+  .planet{font-size:15px;color:var(--lilac-ink)}
+  .meta{display:flex;gap:30px;margin:30px 0 34px;flex-wrap:wrap}
+  .meta div{}
+  .meta .k{font-family:var(--caption);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--navy-soft);margin-bottom:3px}
+  .meta .v{font-family:var(--display);font-size:23px}
+  .dimchips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+  .chip{font-family:var(--caption);font-size:12px;font-weight:500;letter-spacing:.03em;padding:6px 13px;border:1px solid var(--navy-faint);border-radius:99px;color:var(--navy-soft)}
+
+  /* questions */
+  .qblock{margin:0 0 6px}
+  .dimhead{margin:46px 0 6px;display:flex;align-items:baseline;gap:14px}
+  .dimhead .n{font-family:var(--caption);font-size:12px;font-weight:600;color:var(--lilac-ink);letter-spacing:.1em}
+  .dimhead .tag{font-family:var(--caption);font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-soft)}
+  .dimdesc{color:var(--navy-soft);font-size:18px;margin:2px 0 22px;max-width:60ch}
+
+  /* print: force background colours (bars, tags, chips) to show in the PDF */
+  @media print{
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+  }
+
+  /* likert */
+  .lik{margin:0 0 26px;padding:0 0 24px;border-bottom:1px solid var(--navy-hair)}
+  .lik:last-child{border-bottom:0}
+  .lik .q{font-size:20px;margin-bottom:14px}
+  .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+  .opt{position:relative}
+  .opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+  .opt label{
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;
+    padding:13px 6px 11px;border:1px solid var(--navy-faint);border-radius:5px;cursor:pointer;
+    min-height:78px;text-align:center;transition:border-color .12s ease,background .12s ease;
+  }
+  .opt .ring{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--navy-soft);flex:none;transition:all .12s ease}
+  .opt .txt{font-family:var(--caption);font-size:10.5px;font-weight:500;letter-spacing:.02em;line-height:1.25;color:var(--navy-soft)}
+  .opt label:hover{border-color:var(--navy-soft);background:rgba(20,42,85,.025)}
+  .opt input:checked + label{border-color:var(--lilac-ink);background:rgba(201,183,232,.16)}
+  .opt input:checked + label .ring{border-color:var(--lilac-ink);background:var(--lilac-ink);box-shadow:inset 0 0 0 3px var(--parchment-card)}
+  .opt input:checked + label .txt{color:var(--navy)}
+  .opt input:focus-visible + label{outline:2px solid var(--lilac-ink);outline-offset:2px}
+
+  /* pairs */
+  .pair{margin:0 0 30px}
+  .pair .q{font-family:var(--caption);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-soft);margin-bottom:13px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .pcard{position:relative}
+  .pcard input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+  .pcard label{
+    display:block;height:100%;padding:20px 20px;border:1px solid var(--navy-faint);border-radius:7px;cursor:pointer;
+    background:var(--parchment-card);font-size:18px;line-height:1.4;transition:border-color .12s ease,background .12s ease,transform .1s ease;
+  }
+  .pcard label:hover{border-color:var(--navy-soft)}
+  .pcard input:checked + label{border-color:var(--lilac-ink);background:rgba(201,183,232,.18);box-shadow:inset 0 0 0 1px var(--lilac-ink)}
+  .pcard input:focus-visible + label{outline:2px solid var(--lilac-ink);outline-offset:2px}
+  .vs{text-align:center;font-family:var(--display);font-style:italic;color:var(--navy-soft);margin:11px 0}
+
+  /* results */
+  .resulthead{padding:36px 0 4px}
+  .verdict{background:var(--parchment-card);border:1px solid var(--navy-faint);border-left:3px solid var(--lilac-ink);border-radius:0 7px 7px 0;padding:24px 28px;margin:26px 0 12px}
+  .verdict .lbl{font-family:var(--caption);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--lilac-ink);margin-bottom:7px}
+  .verdict p{margin:0;font-size:21px}
+  .note{background:var(--danger-bg);border-radius:7px;padding:18px 22px;margin:16px 0 0;font-size:17px;line-height:1.5}
+  .note .lbl{font-family:var(--caption);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--danger);margin-bottom:6px}
+
+  .meters{margin:30px 0 8px}
+  .meterlegend{display:flex;gap:20px;margin-bottom:22px}
+  .meterlegend span{display:flex;align-items:center;gap:7px;font-family:var(--caption);font-size:12px;color:var(--navy-soft)}
+  .sw{width:12px;height:12px;border-radius:3px;flex:none}
+  .mrow{margin:0 0 22px}
+  .mrow .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+  .mrow .nm{font-family:var(--display);font-size:24px}
+  .focus{font-family:var(--caption);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--danger);background:var(--danger-bg);padding:4px 11px;border-radius:99px}
+  .barwrap{display:flex;align-items:center;gap:11px;margin:5px 0}
+  .bartrack{flex:1;height:10px;background:rgba(20,42,85,.07);border-radius:99px;overflow:hidden}
+  .barfill{height:100%;border-radius:99px;width:0;transition:width .9s cubic-bezier(.4,0,.2,1)}
+  .barpct{font-family:var(--caption);font-size:12px;font-weight:600;min-width:34px;text-align:right;color:var(--navy-soft)}
+
+  .detail{margin:18px 0 0;padding:26px 0 0;border-top:1px solid var(--navy-hair)}
+  .detail .dn{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
+  .detail .dn h3{font-size:27px}
+  .detail .dn .scores{font-family:var(--caption);font-size:11.5px;font-weight:500;letter-spacing:.04em;color:var(--navy-soft)}
+  .detail .rtitle{font-family:var(--display);font-style:italic;font-size:23px;color:var(--lilac-ink);margin:8px 0 6px}
+  .detail .rbody{font-size:18.5px;margin:0}
+
+  .closing{margin-top:40px;padding:30px;background:var(--parchment-card);border:1px solid var(--navy-faint);border-radius:8px}
+  .closing h3{margin-bottom:10px}
+
+  .step{display:none;animation:fade .5s ease}
+  .step.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;animation:none !important}
+  }
+  @media (max-width:560px){
+    h1{font-size:40px}h2{font-size:28px}
+    .wrap{padding:0 18px 80px}
+    body{font-size:18px}
+    .scale{grid-template-columns:repeat(5,1fr);gap:4px}
+    .opt label{padding:11px 3px;min-height:72px}
+    .opt .txt{font-size:9.5px}
+    .cards{grid-template-columns:1fr}
+    .vs{display:none}
+  }
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap" style="padding-bottom:0">
+    <div class="brandline">
+      <span class="brand">Your Meaning Now<span class="dot">.</span></span>
+      <span class="stepcount" id="stepcount"></span>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- STEP 0 — INTRO -->
+  <section class="step on" id="step-0">
+    <div class="hero">
+      <p class="planet">✦</p>
+      <h1>Workplace<br><span class="accent">troubleshooting</span>.</h1>
+      <p class="lede" style="margin-top:22px;max-width:56ch">A lot of people are unhappy at work. However through reflection and analysis we can find what we like, and dislike, and build stepping stones towards better and better jobs. The perfect job isn't something you just land in. Through your own experience we can come up with the best job dynamics-formula for you, so you can get to work in some of the places that you care the most about, doing work that you are actually happy to do.</p>
+      <p style="max-width:58ch">This analysis walks you through the five dynamics that make or break a job. And helps you to understand 1. how much each of these dynamics matter to you, and 2. how satisfied you are with how each of these dynamics play out in your work, right now.</p>
+    </div>
+    <hr class="rule">
+    <div class="meta">
+      <div><div class="k">Time</div><div class="v">12–15 minutes</div></div>
+      <div><div class="k">Questions</div><div class="v">A fair few</div></div>
+      <div><div class="k">You'll leave with</div><div class="v">A clear next move</div></div>
+    </div>
+    <p class="eyebrow" style="margin-bottom:9px">The five dynamics</p>
+    <div class="dimchips" id="chips"></div>
+    <p class="muted" style="margin-top:28px;font-size:17px">Answer as honestly to how you feel as possible, not admitting how things really feel to you will only delay your time to getting what you want.</p>
+    <div class="nav">
+      <span class="spacer"></span>
+      <button class="btn" onclick="go(1)">Begin →</button>
+    </div>
+  </section>
+
+  <!-- STEP 1 — PAIRS -->
+  <section class="step" id="step-1">
+    <p class="eyebrow">Part one · Priorities</p>
+    <h2 style="margin:8px 0 14px">What do you <span class="accent">actually</span> want?</h2>
+    <p class="muted" style="max-width:60ch;margin-bottom:8px">Decisions: While we may want both - these questions are here to cut straight through to what matters most to you. Try to answer to what you would ultimtely be happier lving with.</p>
+    <hr class="rule">
+    <div id="pairs"></div>
+    <div class="nav">
+      <button class="btn ghost" onclick="go(0)">← Back</button>
+      <span class="spacer"></span>
+      <span class="answered" id="pairs-count"></span>
+      <button class="btn" id="pairs-next" onclick="go(2)" disabled>Continue →</button>
+    </div>
+  </section>
+
+  <!-- STEP 2 — IMPORTANCE -->
+  <section class="step" id="step-2">
+    <p class="eyebrow">Part two · How much each matters</p>
+    <h2 style="margin:8px 0 14px">Where do you <span class="accent">place your weight</span>?</h2>
+    <p class="muted" style="max-width:60ch">These aren't about your current job — they're about you. Say how much you agree with each one, honestly, as a description of what you want from work in general. There are no wrong answers.</p>
+    <div id="importance"></div>
+    <div class="nav">
+      <button class="btn ghost" onclick="go(1)">← Back</button>
+      <span class="spacer"></span>
+      <span class="answered" id="imp-count"></span>
+      <button class="btn" id="imp-next" onclick="go(3)" disabled>Continue →</button>
+    </div>
+  </section>
+
+  <!-- STEP 3 — SATISFACTION -->
+  <section class="step" id="step-3">
+    <p class="eyebrow">Part three · Your job right now</p>
+    <h2 style="margin:8px 0 14px">How's it <span class="accent">actually going</span>?</h2>
+    <p class="muted" style="max-width:60ch">Answer about the job you currently have now (or your most recent one). Go with your gut on this, the first reaction is usually the truest one.</p>
+    <div id="satisfaction"></div>
+    <div class="nav">
+      <button class="btn ghost" onclick="go(2)">← Back</button>
+      <span class="spacer"></span>
+      <span class="answered" id="sat-count"></span>
+      <button class="btn" id="sat-next" onclick="finish()" disabled>See my results →</button>
+    </div>
+  </section>
+
+  <!-- STEP 4 — RESULTS -->
+  <section class="step" id="step-4">
+    <div class="resulthead">
+      <p class="eyebrow">Your results</p>
+      <h2 style="margin:8px 0 0">Where your job is <span class="accent">working</span> - and where it isn't.</h2>
+    </div>
+    <div id="verdict"></div>
+    <div id="inflation"></div>
+
+    <div class="meters">
+      <p class="eyebrow" style="margin:34px 0 16px">The picture at a glance</p>
+      <div class="meterlegend">
+        <span><span class="sw" style="background:var(--lilac-fill)"></span>How much it matters to you</span>
+        <span><span class="sw" style="background:var(--navy)"></span>How satisfied you are with how it is right now</span>
+      </div>
+      <div id="meterrows"></div>
+      <p class="muted" style="font-size:16px;margin-top:6px">Here you can see how important the dynamic is to you, and how much your wokr alredy meets this dynamic for you. The wider the gap between the two bars, the more this area is worth your attention.</p>
+    </div>
+
+    <p class="eyebrow" style="margin:42px 0 4px">Dimension by dimension — and what to do</p>
+    <div id="details"></div>
+
+    <div class="closing">
+      <h3>This is a snapshot, not a verdict.</h3>
+      <p class="muted" style="margin-bottom:0">Take the dynamic with feels the most undernourished and make it the focus for your next couple of steps. Retake this whenever you feel like it will help again :).</p>
+    </div>
+
+    <div class="nav">
+      <button class="btn ghost" onclick="restart()">↺ Start again</button>
+      <span class="spacer"></span>
+      <button class="btn" onclick="window.print()">Save / print →</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const DIMS = [
+  {
+    key:"benefits", name:"Benefits", tag:"How the job effects your life outisde of work",
+    desc:"Pay, time off, the commute, where and how you work, security, company perks, bonuses, etc. Everything you get from a job that isn't the work itself.",
+    importance:[
+      {id:"ben_i1", q:"Having plenty of time off to spend with the people I care about is one of my main priorities in a job."},
+      {id:"ben_i2", q:"How much I'm paid is one of the first things I weigh up when I judge a job."},
+      {id:"ben_i3", q:"I'd happily give up other things in exchange for shorter or more predictable working hours."},
+      {id:"ben_i4", q:"A long or draining commute would genuinely put me off a job I otherwise liked."},
+      {id:"ben_i5", q:"It matters a lot to me that a job lets me live where I want to live, rather than forcing me to relocate."},
+      {id:"ben_i6", q:"It's important to me that a job's amount of travel fits what I want — whether that's lots of travel or almost none."},
+      {id:"ben_i7", q:"Knowing my job and income are stable is something I'm not willing to gamble with."},
+      {id:"ben_i8", q:"Perks like bonuses, flexibility and good benefits weigh heavily in how I judge a job."}
+    ],
+    satisfaction:[
+      {id:"ben_s1", q:"I'm fairly paid for what I do."},
+      {id:"ben_s2", q:"I get enough time off, and I can actually switch off when I take it."},
+      {id:"ben_s3", q:"My working hours suit my life rather than swallowing it."},
+      {id:"ben_s4", q:"My commute is something I can live with, not something I dread."},
+      {id:"ben_s5", q:"My job lets me live where I want to live."},
+      {id:"ben_s6", q:"The amount of travel my job involves fits what I actually want."},
+      {id:"ben_s7", q:"My job feels stable enough that I'm not anxious about losing it."},
+      {id:"ben_s8", q:"The perks and benefits I get feel fair for what I give."}
+    ]
+  },
+  {
+    key:"people", name:"People", tag:"Who you do it with",
+    desc:"Your colleagues, how collaborative or solo the work is, whether you like the kind of people around you — and whether you feel seen and valued for what you do.",
+    importance:[
+      {id:"peo_i1", q:"Who I work with can make or break a job for me, almost regardless of the work itself."},
+      {id:"peo_i2", q:"Being genuinely valued and noticed for my work is one of my main priorities."},
+      {id:"peo_i3", q:"It matters a lot to me whether my work is collaborative or mostly done alone."},
+      {id:"peo_i4", q:"I'd turn down a better-paid job to stay around people I actually like."},
+      {id:"peo_i5", q:"Being able to be myself at work, rather than putting on a front, is really important to me."}
+    ],
+    satisfaction:[
+      {id:"peo_s1", q:"I like and respect most of the people I work with."},
+      {id:"peo_s2", q:"The amount of time I spend around people fits me — not too much, not too little."},
+      {id:"peo_s3", q:"I feel seen and valued for the work I do here."},
+      {id:"peo_s4", q:"When I need help or backup, the people around me show up."},
+      {id:"peo_s5", q:"I can be myself at work, not a performance of someone else."}
+    ]
+  },
+  {
+    key:"product", name:"Product", tag:"What you make",
+    desc:"What your work actually produces, who it's for, and how you feel about putting it into the world. Whether you'd be glad to put your name on it.",
+    importance:[
+      {id:"pro_i1", q:"I find it hard to give my best to something I don't believe in, however good the job is otherwise."},
+      {id:"pro_i2", q:"Being proud of what I make is one of the main things I want from work."},
+      {id:"pro_i3", q:"It matters to me that what I make genuinely helps the people it's for."},
+      {id:"pro_i4", q:"I want to be glad to put my name on whatever my work produces."},
+      {id:"pro_i5", q:"Seeing the difference my work makes to a real person matters to me more than most things."}
+    ],
+    satisfaction:[
+      {id:"pro_s1", q:"I'm proud of what my work produces."},
+      {id:"pro_s2", q:"What we make genuinely helps the people it's for."},
+      {id:"pro_s3", q:"I'd happily tell someone I respect what I make at work."},
+      {id:"pro_s4", q:"I can see the difference my work makes to a real person."},
+      {id:"pro_s5", q:"What we make is something I'd want to use or recommend myself."}
+    ]
+  },
+  {
+    key:"process", name:"Process", tag:"The work itself",
+    desc:"The actual day-to-day tasks — whether they pull you in, whether they use the kinds of effort you enjoy, whether you have freedom in how you do them, and whether they keep stretching you.",
+    importance:[
+      {id:"prc_i1", q:"Whether I actually enjoy the day-to-day tasks is one of the biggest factors in a job for me."},
+      {id:"prc_i2", q:"Having freedom over how I do my work, rather than being told exactly what to do, really matters to me."},
+      {id:"prc_i3", q:"I need work that keeps stretching and teaching me, or I get restless."},
+      {id:"prc_i4", q:"Getting absorbed and losing track of time in my work is something I actively want from a job."},
+      {id:"prc_i5", q:"I'd rather do work I find genuinely interesting than work that's easy but dull."}
+    ],
+    satisfaction:[
+      {id:"prc_s1", q:"The actual tasks of my work usually pull me in, rather than being something to get through."},
+      {id:"prc_s2", q:"My work sits in a sweet spot — challenging enough to hold me, not so hard I'm drowning."},
+      {id:"prc_s3", q:"I get to do the kinds of work I'm naturally good at and enjoy."},
+      {id:"prc_s4", q:"I have enough say over how I do my work."},
+      {id:"prc_s5", q:"My work keeps teaching me things — I'm growing, not coasting or stuck."},
+      {id:"prc_s6", q:"Most days I lose track of time at least once because I'm absorbed in what I'm doing."}
+    ]
+  },
+  {
+    key:"industry", name:"Industry", tag:"The field you're in",
+    desc:"Your company and your wider industry, and how you feel about what they do in the world — the good and the harm, and whether you can stand behind it.",
+    importance:[
+      {id:"ind_i1", q:"What my company and industry do in the world weighs heavily on how I feel about my job."},
+      {id:"ind_i2", q:"I need to believe the field I'm in is, on balance, a force for good."},
+      {id:"ind_i3", q:"I'd feel uncomfortable working somewhere I couldn't defend to people I respect."},
+      {id:"ind_i4", q:"Being able to stand behind what my industry does matters more to me than a bigger pay packet."},
+      {id:"ind_i5", q:"I pay attention to the wider impact of my work, not just my own small part in it."}
+    ],
+    satisfaction:[
+      {id:"ind_s1", q:"I'm comfortable with what my industry does in the world."},
+      {id:"ind_s2", q:"I respect the company I work for."},
+      {id:"ind_s3", q:"I don't have to look away from how my work affects people or the planet."},
+      {id:"ind_s4", q:"I'd be happy for people I admire to know which field I work in."},
+      {id:"ind_s5", q:"The good my industry does outweighs the harm, in my eyes."}
+    ]
+  }
+];
+
+/* round-robin priority pairs (each dimension meets every other once) */
+const PAIRS = [
+  {a:"benefits", b:"people",  at:"Great pay and perks, with colleagues you don't click with", bt:"Modest pay, with people you genuinely like"},
+  {a:"benefits", b:"product", at:"A comfortable, well-paid job making something you don't care about", bt:"A tighter budget making something you're proud of"},
+  {a:"benefits", b:"process", at:"Great pay for work that bores you", bt:"Okay pay for work you find absorbing"},
+  {a:"benefits", b:"industry",at:"A well-paid job in an industry you're uneasy about", bt:"Less pay in a field you believe in"},
+  {a:"people",   b:"product", at:"A team you love, making something forgettable", bt:"Colleagues you're lukewarm on, making something you believe in"},
+  {a:"people",   b:"process", at:"Brilliant people, work you find dull", bt:"Work you love, people you don't gel with"},
+  {a:"people",   b:"industry",at:"Great colleagues in an industry you're uneasy about", bt:"So-so colleagues in a field you believe in"},
+  {a:"product",  b:"process", at:"Making something you're proud of, through work you find tedious", bt:"Work you love doing, making something you're indifferent to"},
+  {a:"product",  b:"industry",at:"A product you're proud of, in an industry you're uneasy about", bt:"A forgettable product, in a field you believe in"},
+  {a:"process",  b:"industry",at:"Work you find absorbing, in an industry you're uneasy about", bt:"Dull work, in a field you believe in"}
+];
+
+/* 9 read-outs per dimension. key = importanceBand + satisfactionBand (H/M/L) */
+const RESULTS = {
+  benefits:{
+    HL:{t:"A real squeeze",b:"Benefits matter a lot to you and right now they're not there. Act on this — and start here, because it's often the most negotiable dimension. Pay, hours and flexibility can sometimes move without you changing jobs at all. Find out what's actually on the table where you are. If it won't move, make better terms a hard line in your next search, not a hope."},
+    HM:{t:"Close the gap",b:"Benefits matter to you and they're partway there. Get specific about which one is short — money, time, commute, security — because they're not interchangeable, and fixing the wrong one changes nothing. Then either ask for it plainly here, or name it as a requirement for your next move."},
+    HH:{t:"Solid ground",b:"Benefits matter to you and you've got them. That stability is a real asset — it's what lets you take smart risks elsewhere. Keep one eye open, though: good benefits can quietly hold you in a job that's failing you on things you care about more. Make them a foundation, not a leash."},
+    ML:{t:"Worth a look",b:"Benefits are short and they matter to you a fair bit. Worth raising — especially the easy wins like flexibility or time off. But check it against the dimensions you care about more before you treat it as the main problem."},
+    MM:{t:"Fair enough",b:"Benefits are okay and they matter to you okay. Not your priority and not your problem. Leave it where it is and put your energy on the wider gaps."},
+    MH:{t:"Comfortable",b:"Your benefits are good and they matter a reasonable amount to you. A comfortable position — enjoy it, and aim your attention at the gaps that are wider."},
+    LL:{t:"Not your fight",b:"Your benefits aren't great, but they're also not what you most want from work. It's easy to grumble about pay or the commute when the real issue is elsewhere. Don't let this pull focus from the dimensions you actually care about."},
+    LM:{t:"Fine as is",b:"Benefits are decent and they're not a priority for you. Nothing to do here."},
+    LH:{t:"Nice, not decisive",b:"Good benefits, even though they're not high on your list. A pleasant cushion — just don't let it become the only reason you stay if the things you care about are missing."}
+  },
+  people:{
+    HL:{t:"Worth moving for",b:"The people matter to you more than almost anything, and right now they're wrong. The good news: this is often the most fixable gap — a different team, manager or company can change it completely without changing your career path. So don't write off the whole field because of who you're sitting next to. Make 'people I'd want around me' a real filter next time, and pay close attention to who's in the room when you interview."},
+    HM:{t:"Push for better",b:"People matter to you and it's only half-working. Notice whether it's the individuals, the amount of contact, or feeling unseen — they need different fixes. If it's worth saving here, say what you need. If not, treat the right people as non-negotiable in your next role."},
+    HH:{t:"Hold onto this",b:"You care deeply about the people and you've found good ones. This is one of the hardest things to find and the easiest to underrate. Before you leave for money or a title, remember how rare a team you actually like is — and how much it's been quietly carrying you."},
+    ML:{t:"On the radar",b:"The people aren't right and it matters to you a fair amount. Worth addressing — but sort the louder gaps first. Often a small change, like shifting team or project, fixes more than you'd expect."},
+    MM:{t:"Okay company",b:"The people are fine and they matter to you okay. Not your priority and not your crisis. Leave it be for now."},
+    MH:{t:"Good to have",b:"You like the people and they matter a reasonable amount. A genuine plus — build on it rather than worry about it."},
+    LL:{t:"Not the issue",b:"You're lukewarm on the people, but they're also not what you most want from work. It's easy to let office friction feel bigger than it is. Check whether the real gap is somewhere you care about more."},
+    LM:{t:"Leave it",b:"The people are fine and they're not a priority for you. Nothing needs doing here."},
+    LH:{t:"A quiet bonus",b:"You like the people even though it's not high on your list. Pleasant — just not a reason on its own to stay if the things you care about are missing."}
+  },
+  product:{
+    HL:{t:"This will gnaw at you",b:"What you make matters to you a great deal, and you're not proud of it. That quiet discomfort is corrosive — it's hard to give your best to something you don't believe in, year after year. This is the spine of the whole course: meaning comes from doing hard things for people you actually care about. Start naming who you'd want your work to serve, and steer your next move toward making something you'd be glad to put your name on."},
+    HM:{t:"Aim higher",b:"Being proud of what you make matters to you, and it's only partly there. Get clear on what 'proud' would actually look like — who it would help, what it would be — and use that as a compass. You don't have to leap; you can angle each move toward work you believe in a little more."},
+    HH:{t:"Rare — keep it",b:"You care about what you make and you're proud of it. A lot of people never get this at all. It's the thing most worth protecting when other offers come, because pride in what you produce is what makes the hard days feel worth it."},
+    ML:{t:"Worth noticing",b:"You're not proud of what you make, and it matters to you a fair amount. Worth steering toward over time — but check the gaps you care about more first. Let it shape your direction, not panic your week."},
+    MM:{t:"Neutral",b:"What you make is fine and it matters to you okay. Not your priority right now. Keep a loose eye on it."},
+    MH:{t:"A good sign",b:"You're reasonably proud of what you make and it matters a fair amount. A healthy foundation to build on."},
+    LL:{t:"Don't invent a problem",b:"You're not fussed about what you make — and it isn't something you deeply need from work anyway. That's fine. Just make sure the indifference is real, and not numbness from a job that's draining you elsewhere."},
+    LM:{t:"No action needed",b:"The product's fine and it's not a priority for you. Move on."},
+    LH:{t:"Bonus",b:"You're proud of what you make even though it's not high on your list. A nice extra — nothing you need to chase."}
+  },
+  process:{
+    HL:{t:"Your biggest lever",b:"The work itself matters to you more than almost anything, and right now it isn't landing. This is the gap most worth closing. Before you blame the whole job, get specific: which tasks drain you, and which ones — if any — you'd happily do more of. Process is rarely fixed by hopping to a near-identical role elsewhere; it's fixed by moving toward work that uses the kinds of effort you actually enjoy. Make that your target."},
+    HM:{t:"Worth pushing on",b:"The work matters to you and it's partly there. Don't settle for 'fine' here. Notice which parts of your week you'd protect and which you'd cut, then look for the next role — or the next project within this one — that gives you more of the former. Small, deliberate shifts compound."},
+    HH:{t:"Protect this",b:"You care deeply about the work and you've got it. This is rarer than you think — guard it. When better pay or a bigger title comes calling, weigh it against this honestly, because work you find absorbing is hard to buy back once it's gone."},
+    ML:{t:"On the list, not the top",b:"The work isn't landing and it matters to you a fair amount. Worth a real look — but check first whether the dimensions you care about even more are sorted. Fix the loudest gap before this one."},
+    MM:{t:"Steady",b:"The work's okay and it matters to you okay. Probably not where your attention is best spent right now. Keep a loose eye on it and pour your energy into the wider gaps."},
+    MH:{t:"Quietly working",b:"You enjoy the work and it matters a reasonable amount to you. A solid foundation — nothing to fix, something to build on."},
+    LL:{t:"Don't over-worry this",b:"The work doesn't grab you, but it's also not what you most want from a job. It's easy to fixate on disliking your tasks and miss that it isn't really your priority. Look instead at the dimensions you scored as mattering more."},
+    LM:{t:"Leave it be",b:"The work's fine and it isn't a priority for you anyway. Nothing here needs your attention. Spend it elsewhere."},
+    LH:{t:"A pleasant bonus",b:"You enjoy the work even though it's low on your list. Nice to have — just don't let enjoyable tasks keep you somewhere that's failing you on the things you actually care about."}
+  },
+  industry:{
+    HL:{t:"A slow drain",b:"What your industry does in the world matters to you a lot, and you're uneasy about it. That discomfort rarely just goes away — it sits underneath everything and quietly costs you. Take it seriously as a reason to move, not as guilt to suppress. Look for fields whose effect you can stand behind, and make 'could I respect this industry?' a real question in your next search."},
+    HM:{t:"Worth steering on",b:"The field you're in matters to you and you're only half-comfortable with it. Get specific about what bothers you — the company, the sector, the wider impact — because you might be able to change one without the others. Let it pull the direction of your next move."},
+    HH:{t:"Aligned — protect it",b:"You care what your industry does and you believe in it. That alignment is fuel; don't underrate it. When a better-paid offer in a field you respect less comes along, weigh this honestly — working in something you can stand behind is worth real money."},
+    ML:{t:"Keep it in view",b:"You're uneasy about your industry and it matters to you a fair amount. Worth factoring into your direction — but sort the louder gaps first. Let it shape where you aim, not derail you today."},
+    MM:{t:"Neutral ground",b:"Your industry's fine and it matters to you okay. Not your priority. Leave it be."},
+    MH:{t:"Comfortable",b:"You're comfortable with your field and it matters a reasonable amount. A quiet plus — build elsewhere."},
+    LL:{t:"Not your concern now",b:"You're not fully at ease with your industry, but it's also not something you deeply need to feel good about. Fine — just don't let a vague unease stand in for a gap that's really somewhere else."},
+    LM:{t:"Fine",b:"Your industry's fine and it's not a priority for you. Nothing to do."},
+    LH:{t:"A small plus",b:"You're comfortable with your field even though it's not high on your list. Pleasant, not decisive."}
+  }
+};
+
+/* ---------- THRESHOLDS (tunable) ---------- */
+const HI_BAND = 70;   // >= this = High
+const LO_BAND = 40;   // < this = Low, between = Medium
+const FOCUS_GAP = 25; // importance minus satisfaction to flag "Focus here"
+const FOCUS_MIN_IMP = 40; // only flag things that matter at least this much
+const INFLATE_COUNT = 4;  // marking >= this many dimensions highly important triggers the note
+const INFLATE_IMP = 65;
+
+/* ---------- STATE ---------- */
+const answers = { pairs:{}, imp:{}, likert:{} };
+let current = 0;
+const STEPS = 5;
+
+/* ---------- BUILD UI ---------- */
+function el(t,c,txt){const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+
+(function chips(){
+  const c=document.getElementById("chips");
+  DIMS.forEach(d=>{const s=el("span","chip",d.name+" — "+d.tag.toLowerCase());c.appendChild(s);});
+})();
+
+(function buildPairs(){
+  const host=document.getElementById("pairs");
+  PAIRS.forEach((p,i)=>{
+    const block=el("div","pair");
+    block.appendChild(el("div","q","If you had to choose"));
+    const cards=el("div","cards");
+    [["a",p.at],["b",p.bt]].forEach(([side,txt])=>{
+      const card=el("div","pcard");
+      const inp=document.createElement("input");
+      inp.type="radio";inp.name="pair"+i;inp.id="pair"+i+side;inp.value=side;
+      inp.addEventListener("change",()=>{answers.pairs[i]=(side==="a"?p.a:p.b);updatePairCount();});
+      const lab=el("label",null,txt);lab.setAttribute("for",inp.id);
+      card.appendChild(inp);card.appendChild(lab);cards.appendChild(card);
+    });
+    block.appendChild(cards);
+    host.appendChild(block);
+  });
+})();
+
+const SCALE=[["1","Strongly disagree"],["2","Disagree"],["3","Neither"],["4","Agree"],["5","Strongly agree"]];
+
+function buildLikert(host, item, store, onChange){
+  const wrap=el("div","lik");
+  wrap.appendChild(el("div","q",item.q));
+  const scale=el("div","scale");
+  SCALE.forEach(([val,lab])=>{
+    const opt=el("div","opt");
+    const inp=document.createElement("input");
+    inp.type="radio";inp.name=item.id;inp.id=item.id+"_"+val;inp.value=val;
+    inp.addEventListener("change",()=>{store[item.id]=+val;onChange();});
+    const label=document.createElement("label");label.setAttribute("for",inp.id);
+    label.appendChild(el("span","ring"));
+    label.appendChild(el("span","txt",lab));
+    opt.appendChild(inp);opt.appendChild(label);scale.appendChild(opt);
+  });
+  wrap.appendChild(scale);
+  host.appendChild(wrap);
+}
+
+(function buildImportance(){
+  const host=document.getElementById("importance");
+  DIMS.forEach((d,di)=>{
+    const head=el("div","dimhead");
+    head.appendChild(el("span","n",String(di+1).padStart(2,"0")));
+    head.appendChild(el("span","tag",d.name));
+    host.appendChild(head);
+    host.appendChild(el("p","dimdesc",d.desc));
+    d.importance.forEach(item=>buildLikert(host,item,answers.imp,updateImpCount));
+  });
+})();
+
+(function buildSatisfaction(){
+  const host=document.getElementById("satisfaction");
+  DIMS.forEach((d,di)=>{
+    const head=el("div","dimhead");
+    head.appendChild(el("span","n",String(di+1).padStart(2,"0")));
+    head.appendChild(el("span","tag",d.name));
+    host.appendChild(head);
+    host.appendChild(el("p","dimdesc",d.desc));
+    d.satisfaction.forEach(item=>buildLikert(host,item,answers.likert,updateSatCount));
+  });
+})();
+
+/* ---------- COUNTS / GATING ---------- */
+function updatePairCount(){
+  const done=Object.keys(answers.pairs).length, total=PAIRS.length;
+  document.getElementById("pairs-count").textContent=done+" of "+total;
+  document.getElementById("pairs-next").disabled = done<total;
+}
+function totalImp(){return DIMS.reduce((n,d)=>n+d.importance.length,0);}
+function updateImpCount(){
+  const done=Object.keys(answers.imp).length, total=totalImp();
+  document.getElementById("imp-count").textContent=done+" of "+total;
+  document.getElementById("imp-next").disabled = done<total;
+}
+function totalLikert(){return DIMS.reduce((n,d)=>n+d.satisfaction.length,0);}
+function updateSatCount(){
+  const done=Object.keys(answers.likert).length, total=totalLikert();
+  document.getElementById("sat-count").textContent=done+" of "+total;
+  document.getElementById("sat-next").disabled = done<total;
+}
+
+/* ---------- NAVIGATION ---------- */
+function go(n){
+  current=n;
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("on"));
+  document.getElementById("step-"+n).classList.add("on");
+  const pct = n===0?0:(n/(STEPS-1))*100;
+  document.getElementById("bar").style.width=pct+"%";
+  const names=["Welcome","Priorities","What matters","Your job now","Results"];
+  document.getElementById("stepcount").textContent="Step "+(n+1)+" of "+STEPS+" · "+names[n];
+  window.scrollTo({top:0,behavior:(matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
+}
+
+/* ---------- SCORING ---------- */
+function band(v){return v>=HI_BAND?"H":v>=LO_BAND?"M":"L";}
+function bandWord(b){return b==="H"?"matters a lot":b==="M"?"matters somewhat":"low priority";}
+function satWord(b){return b==="H"?"satisfied":b==="M"?"mixed":"unsatisfied";}
+
+function score(){
+  const out={};
+  DIMS.forEach(d=>{
+    const imp = d.importance.reduce((s,i)=>s+((answers.imp[i.id]-1)/4*100),0)/d.importance.length;
+    const sat = d.satisfaction.reduce((s,i)=>s+((answers.likert[i.id]-1)/4*100),0)/d.satisfaction.length;
+    out[d.key]={imp:Math.round(imp),sat:Math.round(sat),dim:d};
+  });
+  // revealed priority from pairs
+  const wins={};DIMS.forEach(d=>wins[d.key]=0);
+  Object.values(answers.pairs).forEach(k=>{if(wins[k]!=null)wins[k]++;});
+  DIMS.forEach(d=>out[d.key].wins=wins[d.key]);
+  return out;
+}
+
+function finish(){
+  go(4);
+  render(score());
+}
+
+function render(S){
+  const list=DIMS.map(d=>S[d.key]);
+
+  // headline verdict — widest gap among things that matter
+  const gaps=list.filter(x=>x.imp>=LO_BAND).map(x=>({x,gap:x.imp-x.sat}))
+                 .sort((a,b)=>b.gap-a.gap);
+  const v=document.getElementById("verdict");v.innerHTML="";
+  const vc=el("div","verdict");
+  vc.appendChild(el("div","lbl","Start here"));
+  if(gaps.length && gaps[0].gap>=15){
+    const top=gaps[0].x;
+    vc.appendChild(el("p",null,"Your widest gap is "+top.dim.name+" — it matters to you, and right now it's falling short. If you change one thing about your working life, the evidence here says start with this."));
+  } else {
+    vc.appendChild(el("p",null,"No single glaring gap — your job broadly matches what you care about. That's a good place to be. Read the detail below to see what's quietly working, and keep steering toward more of it."));
+  }
+  v.appendChild(vc);
+
+  // inflation note
+  const inf=document.getElementById("inflation");inf.innerHTML="";
+  const highCount=list.filter(x=>x.imp>=INFLATE_IMP).length;
+  if(highCount>=INFLATE_COUNT){
+    const ranked=list.slice().sort((a,b)=>(b.wins-a.wins)||(b.imp-a.imp));
+    const top2=ranked.slice(0,2).map(x=>x.dim.name);
+    const note=el("div","note");
+    note.appendChild(el("div","lbl","One honest flag"));
+    note.appendChild(el("p",null,"You marked nearly everything as mattering a lot — which is honest, but it makes it hard to prioritise, and you can't chase all five at once. When we forced you to choose, you kept reaching for "+top2[0]+" and "+top2[1]+". If you have to start somewhere, the trade-offs you actually made point there."))
+       .style.margin="0";
+    inf.appendChild(note);
+  }
+
+  // meters, sorted by importance
+  const mr=document.getElementById("meterrows");mr.innerHTML="";
+  list.slice().sort((a,b)=>b.imp-a.imp).forEach(x=>{
+    const row=el("div","mrow");
+    const top=el("div","top");
+    top.appendChild(el("span","nm",x.dim.name));
+    if((x.imp-x.sat)>=FOCUS_GAP && x.imp>=FOCUS_MIN_IMP){top.appendChild(el("span","focus","Focus here"));}
+    row.appendChild(top);
+    [["var(--lilac-fill)",x.imp],["var(--navy)",x.sat]].forEach(([col,val])=>{
+      const bw=el("div","barwrap");
+      const tr=el("div","bartrack");
+      const fill=el("div","barfill");fill.style.background=col;
+      tr.appendChild(fill);
+      bw.appendChild(tr);
+      bw.appendChild(el("span","barpct",val+"%"));
+      row.appendChild(bw);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{fill.style.width=val+"%";}));
+    });
+    mr.appendChild(row);
+  });
+
+  // per-dimension detail, sorted by gap (most actionable first)
+  const det=document.getElementById("details");det.innerHTML="";
+  list.slice().sort((a,b)=>(b.imp-b.sat)-(a.imp-a.sat)).forEach(x=>{
+    const key=band(x.imp)+band(x.sat);
+    const r=RESULTS[x.dim.key][key];
+    const d=el("div","detail");
+    const dn=el("div","dn");
+    dn.appendChild(el("h3",null,x.dim.name));
+    dn.appendChild(el("span","scores",bandWord(band(x.imp))+" · "+satWord(band(x.sat))));
+    d.appendChild(dn);
+    d.appendChild(el("div","rtitle",r.t));
+    d.appendChild(el("p","rbody",r.b));
+    det.appendChild(d);
+  });
+}
+
+function restart(){
+  answers.pairs={};answers.likert={};answers.imp={};
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  updatePairCount();updateImpCount();updateSatCount();
+  go(0);
+}
+
+/* init */
+updatePairCount();updateImpCount();updateSatCount();go(0);
+</script>
+</body>
+</html>
