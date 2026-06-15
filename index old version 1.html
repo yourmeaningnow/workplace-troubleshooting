@@ -237,7 +237,7 @@
   <section class="step" id="step-1">
     <p class="eyebrow">Part one · Priorities</p>
     <h2 style="margin:8px 0 14px">What do you <span class="accent">actually</span> want?</h2>
-    <p class="muted" style="max-width:60ch;margin-bottom:8px">Decisions: While we may want both - these questions are here to cut straight through to what matters most to you. Try to answer to what you would ultimtely be happier sacrificng.</p>
+    <p class="muted" style="max-width:60ch;margin-bottom:8px">Decisions: While we may want both - these questions are here to cut straight through to what matters most to you. Try to answer to what you would ultimtely be happier lving with.</p>
     <hr class="rule">
     <div id="pairs"></div>
     <div class="nav">
@@ -252,7 +252,7 @@
   <section class="step" id="step-2">
     <p class="eyebrow">Part two · How much each matters</p>
     <h2 style="margin:8px 0 14px">Where do you <span class="accent">place your weight</span>?</h2>
-    <p class="muted" style="max-width:60ch">Drag each toward how much it genuinely matters to you in a job — not how much you think it should. There are no wrong answers here.</p>
+    <p class="muted" style="max-width:60ch">Drag each toward how much it genuinely matters to you in a job. There are no wrong answers.</p>
     <div id="importance"></div>
     <div class="nav">
       <button class="btn ghost" onclick="go(1)">← Back</button>
@@ -265,7 +265,7 @@
   <section class="step" id="step-3">
     <p class="eyebrow">Part three · Your job right now</p>
     <h2 style="margin:8px 0 14px">How's it <span class="accent">actually going</span>?</h2>
-    <p class="muted" style="max-width:60ch">Answer about the job you have now (or your most recent one). Go with your gut — the first reaction is usually the honest one.</p>
+    <p class="muted" style="max-width:60ch">Answer about the job you currently have now (or your most recent one). Go with your gut on this, the first reaction is usually the truest one.</p>
     <div id="satisfaction"></div>
     <div class="nav">
       <button class="btn ghost" onclick="go(2)">← Back</button>
@@ -279,7 +279,7 @@
   <section class="step" id="step-4">
     <div class="resulthead">
       <p class="eyebrow">Your results</p>
-      <h2 style="margin:8px 0 0">Where your job is <span class="accent">working</span> — and where it isn't.</h2>
+      <h2 style="margin:8px 0 0">Where your job is <span class="accent">working</span> - and where it isn't.</h2>
     </div>
     <div id="verdict"></div>
     <div id="inflation"></div>
@@ -287,11 +287,11 @@
     <div class="meters">
       <p class="eyebrow" style="margin:34px 0 16px">The picture at a glance</p>
       <div class="meterlegend">
-        <span><span class="sw" style="background:var(--lilac-fill)"></span>How much it matters</span>
-        <span><span class="sw" style="background:var(--navy)"></span>How satisfied you are</span>
+        <span><span class="sw" style="background:var(--lilac-fill)"></span>How much it matters to you</span>
+        <span><span class="sw" style="background:var(--navy)"></span>How satisfied you are with how it is right now</span>
       </div>
       <div id="meterrows"></div>
-      <p class="muted" style="font-size:16px;margin-top:6px">The wider the gap, the more it's worth your attention. A short bar you don't care about isn't a problem — a short bar under a tall one is.</p>
+      <p class="muted" style="font-size:16px;margin-top:6px">Here you can see how important the dynamic is to you, and how much your wokr alredy meets this dynamic for you. The wider the gap between the two bars, the more this area is worth your attention.</p>
     </div>
 
     <p class="eyebrow" style="margin:42px 0 4px">Dimension by dimension — and what to do</p>
@@ -299,7 +299,7 @@
 
     <div class="closing">
       <h3>This is a snapshot, not a verdict.</h3>
-      <p class="muted" style="margin-bottom:0">Take your widest gap and make it the question for your next move — a conversation, a side project, a small experiment. You don't fix a career by staring at a page; you fix it by walking toward work that matters to you, one honest step at a time. Retake this whenever the ground shifts.</p>
+      <p class="muted" style="margin-bottom:0">Take the dynamic with feels the most undernourished and make it the focus for your next couple of steps. Retake this whenever you feel like it will help again :).</p>
     </div>
 
     <div class="nav">
@@ -315,10 +315,10 @@
 /* ---------- DATA ---------- */
 const DIMS = [
   {
-    key:"benefits", name:"Benefits", tag:"What the job gives you",
-    desc:"Pay, time off, the commute, where and how you work, security, the perks. Everything you get from a job that isn't the work itself.",
+    key:"benefits", name:"Benefits", tag:"How the job effects your life outisde of work",
+    desc:"Pay, time off, the commute, where and how you work, security, company perks, bonuses, etc. Everything you get from a job that isn't the work itself.",
     importance:[
-      {id:"ben_i1", q:"How much does what a job gives you outside the work — pay, time, place, perks — matter to you?"},
+      {id:"ben_i1", q:"How much of an impact do things like commute gives you outside the work — pay, time, place, perks — matter to you?"},
       {id:"ben_i2", q:"How much do you need a job to feel secure and stable?"}
     ],
     satisfaction:[
